@@ -11,7 +11,7 @@ import java.util.Map;
 @Service
 public class UserService {
 
-    private Map<String, User> users = new HashMap<>();
+    private final Map<String, User> users = new HashMap<>();
 
     @PostConstruct
     public void initialize() {

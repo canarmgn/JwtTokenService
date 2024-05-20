@@ -15,7 +15,7 @@ import java.util.function.Function;
 public class JwtUtil {
 
     // hash işlemi yaparken kullanılacak key
-    private String SECRET_KEY = "cancan";
+    private static final String SECRET_KEY = "cancan";
 
     // verilen token a ait kullanıcı adını döndürür.
     public String extractUsername(String token) {
