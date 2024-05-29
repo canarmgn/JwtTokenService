@@ -1,7 +1,7 @@
 package org.can.armagan.jwttokenservice.service;
 
 import lombok.RequiredArgsConstructor;
-import org.can.armagan.jwttokenservice.model.request.AuthRequest;
+import org.can.armagan.jwttokenservice.model.AuthRequest;
 import org.can.armagan.jwttokenservice.jwt.JwtUtil;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor // Gerekli parametrelerle contructur oluşturur. Autowired yerine bu anotasyonla inject edilir.
+@RequiredArgsConstructor
 public class LoginService {
 
     private final JwtUtil jwtUtil;

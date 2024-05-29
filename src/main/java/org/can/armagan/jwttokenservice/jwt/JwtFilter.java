@@ -3,7 +3,6 @@ package org.can.armagan.jwttokenservice.jwt;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.can.armagan.jwttokenservice.service.CustomUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,9 +21,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
-    
-    private final CustomUserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
+    private final CustomUserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -32,22 +30,18 @@ public class JwtFilter extends OncePerRequestFilter {
         String username = null;
         String jwt = null;
 
-        // Log the authorization header
         log.info("Authorization Header: " + authHeader);
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             jwt = authHeader.substring(7);
             try {
                 username = jwtUtil.extractUsername(jwt);
-                // Log the extracted username
                 log.info("Extracted Username: " + username);
             } catch (Exception e) {
-                // Log the exception if username extraction fails
                 log.info("Error extracting username: " + e.getMessage());
             }
         }
 
-        // Log if the username is null
         if (username == null) {
             log.info("Username is null.");
         }
@@ -60,10 +54,8 @@ public class JwtFilter extends OncePerRequestFilter {
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
-                // Log successful authentication
                 log.info("Authentication successful for user: " + username);
             } else {
-                // Log if token validation fails
                 log.info("Token validation failed for user: " + username);
             }
         }

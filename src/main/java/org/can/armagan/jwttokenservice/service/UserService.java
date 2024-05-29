@@ -1,24 +1,38 @@
 package org.can.armagan.jwttokenservice.service;
 
-import org.springframework.security.core.userdetails.User;
+import lombok.RequiredArgsConstructor;
+import org.can.armagan.jwttokenservice.model.User;
+import org.can.armagan.jwttokenservice.model.UserRoles;
+import org.can.armagan.jwttokenservice.repository.UserRepository;
+import org.can.armagan.jwttokenservice.repository.UserRolesRepository;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    private final Map<String, User> users = new HashMap<>();
+    private final UserRepository userRepository;
+    private final UserRolesRepository userRolesRepository;
 
-    @PostConstruct
-    public void initialize() {
-        users.put("can", new User("can", "can123",new ArrayList<>()));
+    public void createUser(String username, String password) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+
+        userRepository.save(user);
     }
 
-    public User getUserByUsername(String username) {
-        return users.get(username);
+    public void addRoleToUser(long userId, long roleId) {
+        UserRoles userRoles = new UserRoles();
+        userRoles.setUserId(userId);
+        userRoles.setRoleId(roleId);
+        userRolesRepository.save(userRoles);
+
     }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
 }

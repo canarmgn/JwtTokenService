@@ -1,4 +1,4 @@
-package org.can.armagan.jwttokenservice.model.request;
+package org.can.armagan.jwttokenservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,4 +11,5 @@ public class AuthRequest {
 
     private String username;
     private String password;
+
 }
